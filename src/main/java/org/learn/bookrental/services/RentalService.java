@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class RentalService {
@@ -37,5 +38,20 @@ public class RentalService {
 		rent.setReturnedAt(null);
 		rent.setUserId(12);
 		rentalRepository.save(rent);
+	}
+
+
+	@Transactional
+	public void returnBook(Long id)
+	{
+		RentalEntity rent = rentalRepository.getById(id);
+		rent.setReturnedAt(LocalDateTime.now());
+		rent.getBook().setStatus(1);
+	}
+
+
+	public List<RentalEntity> getAllRentals()
+	{
+		return rentalRepository.findAll();
 	}
 }

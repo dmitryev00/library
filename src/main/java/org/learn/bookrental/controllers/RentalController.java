@@ -1,11 +1,11 @@
 package org.learn.bookrental.controllers;
 
 
+import org.learn.bookrental.entitys.RentalEntity;
 import org.learn.bookrental.services.RentalService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/rent")
@@ -23,5 +23,17 @@ public class RentalController {
 	public void rentBook(@PathVariable String name)
 	{
 		rentalService.rentBook(name);
+	}
+
+	@PostMapping("/return/{id}")
+	public void returnBook(@PathVariable Long id)
+	{
+		rentalService.returnBook(id);
+	}
+
+	@GetMapping()
+	public List<RentalEntity> getAllRentals()
+	{
+		return rentalService.getAllRentals();
 	}
 }
