@@ -1,7 +1,7 @@
 package org.learn.bookrental.controllers;
 
 
-import org.learn.bookrental.entitys.RentalEntity;
+import org.learn.bookrental.dto.RentalResponseDTO;
 import org.learn.bookrental.services.RentalService;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +32,7 @@ public class RentalController {
 	}
 
 	@GetMapping()
-	public List<RentalEntity> getAllRentals()
+	public List<RentalResponseDTO> getAllRentals()
 	{
 		return rentalService.getAllRentals();
 	}

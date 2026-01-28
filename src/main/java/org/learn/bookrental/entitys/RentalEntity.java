@@ -25,7 +25,7 @@ public class RentalEntity {
 	private BookEntity book;
 
 	@Column(name = "user_id")
-	private int userId;
+	private Long userId;
 
 	@Column(name = "rented_at")
 	private LocalDateTime rentedAt;

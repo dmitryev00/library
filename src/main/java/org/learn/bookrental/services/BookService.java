@@ -2,11 +2,14 @@ package org.learn.bookrental.services;
 
 
 import org.learn.bookrental.dto.BookInputDto;
+import org.learn.bookrental.dto.BookResponseDTO;
 import org.learn.bookrental.entitys.BookEntity;
+import org.learn.bookrental.mappers.BookMapper;
 import org.learn.bookrental.repositories.BookRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,31 +23,38 @@ public class BookService {
 		this.bookRepository = bookRepository;
 	}
 
-	public List<BookEntity> getAllBooks()
+	public List<BookResponseDTO> getAllBooks()
 	{
-		return bookRepository.findAll();
+		List<BookEntity> bookEntities = bookRepository.findAll();
+		return bookEntities.stream().map(
+				BookMapper::toDto
+		).collect(Collectors.toList());
 	}
 
-	public BookEntity getById(Long id)
+	public BookResponseDTO getById(Long id)
 	{
 		return getBookById(id);
 	}
 
-	public List<BookEntity> getAllActual()
+	public List<BookResponseDTO> getAllActual()
 	{
-		return bookRepository.findAll().stream()
+		List<BookEntity> bookEntities = bookRepository.findAll().stream()
 				.filter(book -> book.getStatus() == 1)
-				.collect(Collectors.toList());
+				.toList();
+		return bookEntities.stream().map(
+					BookMapper::toDto
+					).collect(Collectors.toList());
 	}
 
-	public BookEntity putBook(BookInputDto book)
+	public BookResponseDTO putBook(BookInputDto book)
 	{
 		BookEntity bookEntity = new BookEntity();
 		bookEntity.setName(book.name());
 		bookEntity.setEdition(book.edition());
 		bookEntity.setAuthor(book.author());
 		bookEntity.setStatus(1);
-		return bookRepository.save(bookEntity);
+		BookEntity saved = bookRepository.save(bookEntity);
+		return BookMapper.toDto(saved);
 	}
 
 	@Transactional
@@ -56,22 +66,30 @@ public class BookService {
 	}
 
 	@Transactional(readOnly = true)
-	public BookEntity getBookById(Long id) {
-		return bookRepository.findById(id)
+	public BookResponseDTO getBookById(Long id) {
+		BookEntity book = bookRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Книга с ID " + id + " не найдена"));
+		return BookMapper.toDto(book);
 	}
 
 
-	public List<BookEntity> getAllUnactual()
+	public List<BookResponseDTO> getAllUnactual()
 	{
-		return bookRepository.findAll().stream()
+		List<BookEntity> bookEntities = bookRepository.findAll().stream()
 				.filter(book -> book.getStatus() == 2)
-				.collect(Collectors.toList());
+				.toList();
+
+		return bookEntities.stream().map(
+				BookMapper::toDto
+				).collect(Collectors.toList());
 	}
 
 
-	public List<BookEntity> getBooksByName(String name)
+	public List<BookResponseDTO> getBooksByName(String name)
 	{
-		return bookRepository.findByName(name);
+		List<BookEntity> bookEntities = bookRepository.findByName(name);
+		return bookEntities.stream().map(
+				BookMapper::toDto
+				).collect(Collectors.toList());
 	}
 }

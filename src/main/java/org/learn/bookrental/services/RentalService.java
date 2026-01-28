@@ -1,7 +1,9 @@
 package org.learn.bookrental.services;
 
+import org.learn.bookrental.dto.RentalResponseDTO;
 import org.learn.bookrental.entitys.BookEntity;
 import org.learn.bookrental.entitys.RentalEntity;
+import org.learn.bookrental.mappers.RentalMapper;
 import org.learn.bookrental.repositories.BookRepository;
 import org.learn.bookrental.repositories.RentalRepository;
 import org.springframework.stereotype.Service;
@@ -36,7 +38,7 @@ public class RentalService {
 		rent.setRentedAt(rentedAt);
 		rent.setDueAt(dueAt);
 		rent.setReturnedAt(null);
-		rent.setUserId(12);
+		rent.setUserId(12L);
 		rentalRepository.save(rent);
 	}
 
@@ -50,8 +52,11 @@ public class RentalService {
 	}
 
 
-	public List<RentalEntity> getAllRentals()
+	public List<RentalResponseDTO> getAllRentals()
 	{
-		return rentalRepository.findAll();
+		List<RentalEntity> rentals = rentalRepository.findAll();
+
+		return rentals.stream().map(RentalMapper::toDTO
+		).toList();
 	}
 }

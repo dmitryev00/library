@@ -10,5 +10,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 	List<BookEntity> findByName(String name);
 
 	BookEntity findFirstByStatusAndName(int status, String name);
+
+	List<BookEntity> getBookById(Long id);
 }
 

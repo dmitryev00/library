@@ -2,7 +2,7 @@ package org.learn.bookrental.controllers;
 
 
 import org.learn.bookrental.dto.BookInputDto;
-import org.learn.bookrental.entitys.BookEntity;
+import org.learn.bookrental.dto.BookResponseDTO;
 import org.learn.bookrental.services.BookService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,25 +21,25 @@ public class BookController {
 	}
 
 	@GetMapping("/id/{id}")
-	public BookEntity getById(@PathVariable Long id)
+	public BookResponseDTO getById(@PathVariable Long id)
 	{
 		return bookService.getById(id);
 	}
 
 	@GetMapping()
-	public List<BookEntity> getAllBooks()
+	public List<BookResponseDTO> getAllBooks()
 	{
 		return bookService.getAllBooks();
 	}
 
 	@GetMapping("/actual")
-	public List<BookEntity> getAllActualBooks()
+	public List<BookResponseDTO> getAllActualBooks()
 	{
 		return bookService.getAllActual();
 	}
 
 	@PostMapping()
-	public BookEntity addNewBook(@RequestBody BookInputDto request)
+	public BookResponseDTO addNewBook(@RequestBody BookInputDto request)
 	{
 		return bookService.putBook(request);
 	}
@@ -51,13 +51,13 @@ public class BookController {
 	}
 
 	@GetMapping("/notactual")
-	public List<BookEntity> getAllUnactualBooks()
+	public List<BookResponseDTO> getAllUnactualBooks()
 	{
 		return bookService.getAllUnactual();
 	}
 
 	@GetMapping("/name/{name}")
-	public List<BookEntity> getBooksByName(@PathVariable String name)
+	public List<BookResponseDTO> getBooksByName(@PathVariable String name)
 	{
 		return bookService.getBooksByName(name);
 	}
