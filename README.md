@@ -1,6 +1,5 @@
 <p align="center">
-  <!-- SVG-шапка можно вставить сюда -->
-  <!-- <img src="assets/library-header.svg" alt="Library App" /> -->
+  <img src="assets/library-header.svg" alt="Library App" />
 </p>
 
 <h1 align="center">📚 Library Book Rental</h1>
